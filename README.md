@@ -5,16 +5,21 @@ Dccon Downloader Modernization Project
 
 ### Python by Choi Gwonwoo@[gw1021](https://github.com/gw1021)
 
-https://github.com/gw1021/dccon-downloader/releases/download/0.0.1/dcconPython.exe
+EXE [Download](https://github.com/gw1021/dccon-downloader/releases/download/0.0.1/dcconPython.exe)
 
 CLI
 
-* python app.js
+```
+pip install -r requirements.txt
+python app.js
+```
 
 ### Javascript by Sax Man@[saxman6989](https://github.com/saxman6989)
 
-* npm install
-* node app.js
+```
+npm install
+node app.js
+```
 
 ### Ruby
 
