@@ -1,19 +1,34 @@
 'use strict'
 
+// Import modules
 const fs = require('fs')
 const axios = require('axios').default
 const axiosCookieJarSupport = require('axios-cookiejar-support').default
 const tough = require('tough-cookie')
 const qs = require('querystring')
+const readline = require('readline')
+const progressBar = require('./progress')
 
+// Enable axios-cookiejar-support
 axiosCookieJarSupport(axios)
 
+// Create new cookiejar object, which is a container for various sessions / cookies
 const cookieJar = new tough.CookieJar()
 
 const url = 'http://dccon.dcinside.com/index/package_detail'
 
-const id = '9807'
+const getInput = () => {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  })
 
+  return new Promise(resolve => {
+    rl.question('Insert id here: ', input => resolve(input))
+  })
+}
+
+// Extract ci_c value from given cookie
 const extractCookie = cookie => {
   /* A structure of the given cookie
    * 
@@ -29,10 +44,14 @@ const extractCookie = cookie => {
   return ci_cValue;
 }
 
-const requestImage = (response)=> {
+// 
+const requestImages = (response, id)=> {
   if(!fs.existsSync(`${id}/`)) fs.mkdirSync(id, '0666')
 
   const dataArray = response.data.detail
+  const dataArrayLength = dataArray.length
+
+  const myProgressBar = new progressBar(dataArrayLength)
 
   dataArray.forEach(obj => {
     const dest = `${id}/${obj.idx}.${obj.ext}`
@@ -50,8 +69,10 @@ const requestImage = (response)=> {
       })
     })
     fStream.on('finish', () => {
-      console.log(`-> ${dest}`)
       fStream.close()
+
+      myProgressBar.current += 1
+      myProgressBar.update()
     })
     fStream.on('error', (err) => {
       fs.unlink(dest)
@@ -62,6 +83,7 @@ const requestImage = (response)=> {
 
 (async () => {
   try{
+    const getID = await getInput()
     const responseGet = await axios.get(url, {
       jar: cookieJar,
       withCredentials: true
@@ -70,7 +92,7 @@ const requestImage = (response)=> {
     const responsePost = await axios.post(url,
       qs.stringify({
         ci_t: acquireCookie,
-        package_idx: id,
+        package_idx: getID,
       }),
       {
         headers: {
@@ -80,7 +102,7 @@ const requestImage = (response)=> {
         jar: cookieJar,
         withCredentials: true,
       })
-    const downloadImages = await requestImage(responsePost)
+    const downloadImages = await requestImages(responsePost, getID)
   } catch(error) {
     throw error
   }

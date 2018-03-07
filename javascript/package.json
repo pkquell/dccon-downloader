@@ -1,8 +1,8 @@
 {
-  "name": "js-dccon-downloader",
+  "name": "dccon-downloader",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,7 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
-    "axios-cookiejar-support": "^0.3.4",
-    "tough-cookie": "^2.3.4"
+    "axios-cookiejar-support": "^0.3.4"
   }
 }

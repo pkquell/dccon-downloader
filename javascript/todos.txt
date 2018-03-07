@@ -1,3 +1,0 @@
-1. fStream 변수 wStream으로 변경
-2. existsSync 함수 부분 변수로 빼 놓기 (line 33)
-3. 검색 기능 추가
