@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "run": "node index"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "archiver": "^2.1.1",
     "axios": "^0.18.0",
     "axios-cookiejar-support": "^0.3.4"
   }

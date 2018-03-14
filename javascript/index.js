@@ -7,7 +7,9 @@ const axiosCookieJarSupport = require('axios-cookiejar-support').default
 const tough = require('tough-cookie')
 const qs = require('querystring')
 const readline = require('readline')
-const progressBar = require('./progress')
+
+const ProgressBar = require('./progress')
+const Archiver = require('./archiver')
 
 // Enable axios-cookiejar-support
 axiosCookieJarSupport(axios)
@@ -51,13 +53,13 @@ const requestImages = (response, id)=> {
   const dataArray = response.data.detail
   const dataArrayLength = dataArray.length
 
-  const myProgressBar = new progressBar(dataArrayLength)
+  const progressBar = new ProgressBar(dataArrayLength)
 
   dataArray.forEach(obj => {
-    const dest = `${id}/${obj.idx}.${obj.ext}`
-    const fStream = fs.createWriteStream(dest)
+    const dest = `${__dirname}/${id}/${obj.idx}.${obj.ext}`
+    const wStream = fs.createWriteStream(dest)
 
-    fStream.on('open', () => {
+    wStream.on('open', () => {
       axios.get(`http://dcimg5.dcinside.com/dccon.php?no=${obj.path}`,
       {
         headers: {
@@ -65,20 +67,28 @@ const requestImages = (response, id)=> {
         },
         responseType:'stream',
       }).then(response => {
-        response.data.pipe(fStream)
+        response.data.pipe(wStream)
       })
     })
-    fStream.on('finish', () => {
-      fStream.close()
+    wStream.on('finish', () => {
+      wStream.close()
 
-      myProgressBar.current += 1
-      myProgressBar.update()
+      progressBar.current += 1
+      progressBar.update()
     })
-    fStream.on('error', (err) => {
+    wStream.on('error', (err) => {
       fs.unlink(dest)
       throw err
     })
   })
+}
+
+const createArchive = (id) => {
+  const dir = `${__dirname}/${id}`
+  const archiver = new Archiver(dir)
+
+  archiver.append()
+  archiver.finalize()
 }
 
 (async () => {
@@ -103,7 +113,8 @@ const requestImages = (response, id)=> {
         withCredentials: true,
       })
     const downloadImages = await requestImages(responsePost, getID)
-  } catch(error) {
-    throw error
+    const createZip = await createArchive(getID)
+  } catch(err) {
+    throw err
   }
 })()
