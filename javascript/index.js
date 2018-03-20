@@ -9,7 +9,6 @@ const qs = require('querystring')
 const readline = require('readline')
 
 const ProgressBar = require('./progress')
-const Archiver = require('./archiver')
 
 // Enable axios-cookiejar-support
 axiosCookieJarSupport(axios)
@@ -43,7 +42,7 @@ const extractCookie = cookie => {
     .split(';')[0]
     .split('=')[1];
 
-  return ci_cValue;
+  return new Promise(resolve => resolve(ci_cValue))
 }
 
 // 
@@ -67,7 +66,8 @@ const requestImages = (response, id)=> {
         },
         responseType:'stream',
       }).then(response => {
-        response.data.pipe(wStream)
+        const image = response.data
+        image.pipe(wStream)
       })
     })
     wStream.on('finish', () => {
@@ -81,14 +81,6 @@ const requestImages = (response, id)=> {
       throw err
     })
   })
-}
-
-const createArchive = (id) => {
-  const dir = `${__dirname}/${id}`
-  const archiver = new Archiver(dir)
-
-  archiver.append()
-  archiver.finalize()
 }
 
 (async () => {
@@ -113,7 +105,6 @@ const createArchive = (id) => {
         withCredentials: true,
       })
     const downloadImages = await requestImages(responsePost, getID)
-    const createZip = await createArchive(getID)
   } catch(err) {
     throw err
   }

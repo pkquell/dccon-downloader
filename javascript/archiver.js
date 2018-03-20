@@ -1,3 +1,5 @@
+//Not working!!
+
 'use strict'
 
 const fs = require('fs')
@@ -28,8 +30,11 @@ module.exports = class Archiver {
     this[_archive].pipe(_output)
   }
 
-  append() {
-    this[_archive].glob(`${dir}/(*.png|*.gif|*.jpg)`)
+  append(readableStream) {
+    if (typeof readableStream.read != 'function') {
+      console.log('Valid')
+    }
+    this[_archive].append(readableStream)
   }
 
   finalize() {
