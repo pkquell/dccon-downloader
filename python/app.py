@@ -36,5 +36,5 @@ else:
 	s.close()
 	print('Job [', dccon_id, '] Complete!! ^^7')
 
-raw_input("Press enter to continue..")
+input("Press enter to continue..")
 exit()
