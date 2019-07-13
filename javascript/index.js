@@ -16,7 +16,7 @@ axiosCookieJarSupport(axios)
 // Create new cookiejar object, which is a container for various sessions / cookies
 const cookieJar = new tough.CookieJar()
 
-const url = 'http://dccon.dcinside.com/index/package_detail'
+const url = 'https://dccon.dcinside.com/index/package_detail'
 
 const getInput = () => {
   const rl = readline.createInterface({
@@ -47,7 +47,7 @@ const extractCookie = cookie => {
 
 // 
 const requestImages = (response, id)=> {
-  if(!fs.existsSync(`${id}/`)) fs.mkdirSync(id, '0666')
+  if(!fs.existsSync(`${id}/`)) fs.mkdirSync(id, '0755')
 
   const dataArray = response.data.detail
   const dataArrayLength = dataArray.length
@@ -59,10 +59,10 @@ const requestImages = (response, id)=> {
     const wStream = fs.createWriteStream(dest)
 
     wStream.on('open', () => {
-      axios.get(`http://dcimg5.dcinside.com/dccon.php?no=${obj.path}`,
+      axios.get(`https://dcimg5.dcinside.com/dccon.php?no=${obj.path}`,
       {
         headers: {
-          'Referer': 'http://dccon.dcinside.com/',
+          'Referer': 'https://dccon.dcinside.com/',
         },
         responseType:'stream',
       }).then(response => {

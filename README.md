@@ -1,30 +1,23 @@
 # dccon-downloader
-Dccon Downloader Modernization Project
+디시인사이드의 콘텐츠인 디시콘 이미지를 편리하게 다운로드받을 수 있도록 하는 프로그램입니다.
 
-앞으로 개발은 언어별 브랜치에서 이뤄집니다. 마스터 브랜치는 릴리즈 소개 및 사용법 안내입니다
+# 사용법
+프로그램 실행 후 디시콘 고유 번호를 입력하시면 자동으로 전체 이미지가 다운로드됩니다.
 
-### Python by Choi Gwonwoo@[gw1021](https://github.com/gw1021)
+## Javascript인 경우
+```
+npm i
+node index
+```
 
-EXE [Download](https://github.com/gw1021/dccon-downloader/releases/download/0.0.1/dcconPython.exe)
-
-CLI
-
+## Python인 경우
 ```
 pip install -r requirements.txt
-python app.js
+python app.py
 ```
 
-### Javascript by Sax Man@[saxman6989](https://github.com/saxman6989)
+# 코드 개선
+[Pull Requests](./pulls) 또는 [Issues](./issues)에 제보 부탁드립니다.
 
-```
-npm install
-node app.js
-```
-
-### Ruby
-
-Not yet(Send a Pull Request)
-
-### Go
-
-故
+# 저작자
+[CONTRIBUTORS.md](CONTRIBUTORS.md) 파일을 참조해 주세요.

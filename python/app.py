@@ -5,9 +5,9 @@ import os
 dccon_id = input("input dccon id :")
 
 header_for_getCookie = {'X-Requested-With':'XMLHttpRequest'}
-header_for_imageServer = {'Referer': 'http://dccon.dcinside.com/'}
-package_detail_url = 'http://dccon.dcinside.com/index/package_detail'
-download_url = 'http://dcimg5.dcinside.com/dccon.php?no='
+header_for_imageServer = {'Referer': 'https://dccon.dcinside.com/'}
+package_detail_url = 'https://dccon.dcinside.com/index/package_detail'
+download_url = 'https://dcimg5.dcinside.com/dccon.php?no='
 # Open session
 s = requests.Session()
 # Get Cookie (ci_c)
@@ -36,4 +36,5 @@ else:
 	s.close()
 	print('Job [', dccon_id, '] Complete!! ^^7')
 
-os.system("pause")
+raw_input("Press enter to continue..")
+exit()
