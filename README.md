@@ -17,7 +17,7 @@ python app.py
 ```
 
 # 코드 개선
-[Pull Requests](./pulls) 또는 [Issues](./issues)에 제보 부탁드립니다.
+[Pull Requests](https://github.com/EtWinner/dccon-downloader/pulls) 또는 [Issues](https://github.com/EtWinner/dccon-downloader/issues)에 제보 부탁드립니다.
 
 # 저작자
 [CONTRIBUTORS.md](CONTRIBUTORS.md) 파일을 참조해 주세요.
