@@ -8,10 +8,12 @@ const _private = {
   },
 
   quitConsole() {
-    process.stdout.write('\nPress Any key to exit...')
+    /*process.stdout.write('\nPress Any key to exit...')
     process.stdin.on('data', (key) => {
       if(key) process.exit(0)
-    })
+    })*/
+    process.stdout.write('\n')
+    process.exit(0)
   },
 }
 

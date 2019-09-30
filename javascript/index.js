@@ -47,7 +47,9 @@ const extractCookie = cookie => {
 
 // 
 const requestImages = (response, id)=> {
-  if(!fs.existsSync(`${id}/`)) fs.mkdirSync(id, '0755')
+  const title = response.data.info.title
+
+  if(!fs.existsSync(`${id} ${title}/`)) fs.mkdirSync(id, '0755')
 
   const dataArray = response.data.detail
   const dataArrayLength = dataArray.length
@@ -55,7 +57,7 @@ const requestImages = (response, id)=> {
   const progressBar = new ProgressBar(dataArrayLength)
 
   dataArray.forEach(obj => {
-    const dest = `${__dirname}/${id}/${obj.idx}.${obj.ext}`
+    const dest = `${__dirname}/${id} ${title}/${obj.idx} ${obj.title}.${obj.ext}`
     const wStream = fs.createWriteStream(dest)
 
     wStream.on('open', () => {
